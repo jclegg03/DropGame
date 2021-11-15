@@ -33,6 +33,8 @@ class GameScene : SKScene , SKPhysicsContactDelegate
         
         node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
         
+        node.physicsBody?.contactTestBitMask = UInt32(colorMask)
+        
         addChild(node)
     }
     
@@ -44,5 +46,27 @@ class GameScene : SKScene , SKPhysicsContactDelegate
         colorMask = randomIndex + 1
         
         return colors[randomIndex]
+    }
+    
+    private func annihilate(deadNode : SKNode) -> Void
+    {
+        deadNode.removeFromParent()
+    }
+    
+    private func collisionBetween(_ nodeOne : SKNode, and nodeTwo : SKNode) -> Void
+    {
+        if(nodeOne.physicsBody?.contactTestBitMask == nodeTwo.physicsBody?.contactTestBitMask)
+        {
+            annihilate(deadNode: nodeOne)
+            annihilate(deadNode: nodeTwo)
+        }
+    }
+    
+    func didBegin(_ contact: SKPhysicsContact) -> Void
+    {
+        guard let first = contact.bodyA.node else { return }
+        guard let second = contact.bodyB.node else { return }
+        
+        collisionBetween(first, and: second)
     }
 }
