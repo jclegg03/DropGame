@@ -54,7 +54,7 @@
 		A7AE28C82742DFFE0062943F /* DropGame */ = {
 			isa = PBXGroup;
 			children = (
-				A7AE28DD2742E11C0062943F /* GameScene.swift */,
+				A7AE28E12742E4D30062943F /* GameModel */,
 				A7AE28D92742E02F0062943F /* Resources */,
 				A7AE28CB2742DFFE0062943F /* DropGameView.swift */,
 				A7AE28CF2742DFFE0062943F /* Preview Content */,
@@ -78,6 +78,14 @@
 				A7AE28D22742DFFE0062943F /* Info.plist */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A7AE28E12742E4D30062943F /* GameModel */ = {
+			isa = PBXGroup;
+			children = (
+				A7AE28DD2742E11C0062943F /* GameScene.swift */,
+			);
+			path = GameModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
