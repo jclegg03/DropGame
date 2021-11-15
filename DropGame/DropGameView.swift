@@ -19,13 +19,19 @@ struct DropGameView: View
         scene.scaleMode = .fill
         return scene
     }
+    private var score : Int = 0
     
     var body: some View
     {
-        SpriteView(scene: simpleScene)
-            .frame(width: width, height: height)
-            .edgesIgnoringSafeArea(.all)
+        VStack
+        {
+            Text("Score: \(score)")
+            SpriteView(scene: simpleScene)
+                .frame(width: width, height: height)
+                .edgesIgnoringSafeArea(.all)
+        }
     }
+    
 }
 
 struct ContentView_Previews: PreviewProvider

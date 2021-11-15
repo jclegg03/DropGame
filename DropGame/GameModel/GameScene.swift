@@ -7,9 +7,11 @@
 
 import Foundation
 import SpriteKit
+import SwiftUI
 
-class GameScene : SKScene , SKPhysicsContactDelegate
+class GameScene : SKScene, SKPhysicsContactDelegate
 {
+    private var score : Int = 0
     private var colorMask : Int = 0b0000
     
     override func didMove(to view : SKView) -> Void
@@ -50,6 +52,7 @@ class GameScene : SKScene , SKPhysicsContactDelegate
     
     private func annihilate(deadNode : SKNode) -> Void
     {
+        score += Int(deadNode.frame.size.height * deadNode.frame.size.width)
         deadNode.removeFromParent()
     }
     
@@ -68,5 +71,10 @@ class GameScene : SKScene , SKPhysicsContactDelegate
         guard let second = contact.bodyB.node else { return }
         
         collisionBetween(first, and: second)
+    }
+    
+    public func getScore() -> Int
+    {
+        return self.score
     }
 }
