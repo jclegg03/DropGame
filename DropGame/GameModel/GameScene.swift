@@ -22,6 +22,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     }
     private var colorMask : Int = 0b0000
     
+    let texture = SKTexture(imageNamed: "NewRevan")
+    
     
     //MARK: - SKScene methods
     override func didMove(to view : SKView) -> Void
@@ -54,10 +56,13 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         let location = touch.location(in: self)
     
         let node : SKSpriteNode
-        node = SKSpriteNode(color: currentColor, size: CGSize(width: width, height: height))
+       
+        
+        node = SKSpriteNode(texture: texture, color: currentColor, size: CGSize(width: width, height: height))
+        node.colorBlendFactor = 1.0
         node.position = location
         
-        node.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
+        node.physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width: width, height: height))
         
         node.physicsBody?.contactTestBitMask = UInt32(colorMask)
         
