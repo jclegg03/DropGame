@@ -22,6 +22,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     }
     private var colorMask : Int = 0b0000
     
+    
     //MARK: - SKScene methods
     override func didMove(to view : SKView) -> Void
     {
@@ -36,6 +37,10 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         scoreNode.fontName = "Times New Roman"
         addChild(scoreNode)
         score = 0 //Forces a call to the didSet observer
+        
+        //add audio
+        let backgroundMusic = SKAudioNode(fileNamed: "music")
+        addChild(backgroundMusic)
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) -> Void
@@ -72,6 +77,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     private func annihilate(deadNode : SKNode) -> Void
     {
         score += Int(deadNode.frame.size.height * deadNode.frame.size.width)
+        explosionEffect(at: CGPoint(x: deadNode.position.x, y: deadNode.position.y))
         deadNode.removeFromParent()
     }
     
@@ -95,5 +101,19 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     public func getScore() -> Int
     {
         return self.score
+    }
+    
+    private func explosionEffect(at location: CGPoint) -> Void
+    {
+        if let explosion = SKEmitterNode(fileNamed: "SparkParticle")
+        {
+            explosion.position = location
+            addChild(explosion)
+            let waitTime = SKAction.wait(forDuration: 5)
+            let removeExplosion = SKAction.removeFromParent()
+            let explosiveSequence = SKAction.sequence([waitTime, removeExplosion])
+            
+            explosion.run(explosiveSequence)
+        }
     }
 }
