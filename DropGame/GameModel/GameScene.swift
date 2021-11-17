@@ -40,6 +40,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         
         //add audio
         let backgroundMusic = SKAudioNode(fileNamed: "music")
+        backgroundMusic.name = "music"
         addChild(backgroundMusic)
     }
     
@@ -78,6 +79,7 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     {
         score += Int(deadNode.frame.size.height * deadNode.frame.size.width)
         explosionEffect(at: CGPoint(x: deadNode.position.x, y: deadNode.position.y))
+        updateSound()
         deadNode.removeFromParent()
     }
     
@@ -113,7 +115,18 @@ class GameScene : SKScene, SKPhysicsContactDelegate
             let removeExplosion = SKAction.removeFromParent()
             let explosiveSequence = SKAction.sequence([waitTime, removeExplosion])
             
+            let effectSound = SKAction.playSoundFileNamed("drop bass", waitForCompletion: false)
+            run(effectSound)
+            
             explosion.run(explosiveSequence)
+        }
+    }
+    private func updateSound() -> Void
+    {
+        if let sound = childNode(withName: "music")
+        {
+            let speedUp = SKAction.changePlaybackRate(by: 2, duration: 1000)
+            sound.run(speedUp)
         }
     }
 }

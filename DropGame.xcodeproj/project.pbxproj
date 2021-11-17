@@ -14,6 +14,7 @@
 		A7AE28DE2742E11C0062943F /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = A7AE28DD2742E11C0062943F /* GameScene.swift */; };
 		A7B560C0274589E30095FD46 /* SparkParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = A7B560BE274589E30095FD46 /* SparkParticle.sks */; };
 		A7B560C1274589E30095FD46 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7B560BF274589E30095FD46 /* Assets.xcassets */; };
+		A7B560C8274590730095FD46 /* drop bass.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7B560C6274590730095FD46 /* drop bass.wav */; };
 		A7B560D3274593010095FD46 /* music.wav in Resources */ = {isa = PBXBuildFile; fileRef = A7B560D2274593010095FD46 /* music.wav */; };
 /* End PBXBuildFile section */
 
