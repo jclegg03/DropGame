@@ -11,13 +11,31 @@ import SwiftUI
 
 class GameScene : SKScene, SKPhysicsContactDelegate
 {
-    private var score : Int = 0
+    //MARK: Data members
+    private let scoreNode : SKLabelNode = SKLabelNode(fontNamed: "Copperplate-Bold")
+    private var score : Int = -0
+    {
+        didSet
+        {
+            scoreNode.text = "Score: \(score)"
+        }
+    }
     private var colorMask : Int = 0b0000
     
+    //MARK: - SKScene methods
     override func didMove(to view : SKView) -> Void
     {
         physicsBody = SKPhysicsBody(edgeLoopFrom : frame)
         physicsWorld.contactDelegate = self
+        
+        //Add the score label
+        scoreNode.zPosition = 2
+        scoreNode.position.x = 120
+        scoreNode.position.y = 385
+        scoreNode.fontSize = 20
+        scoreNode.fontName = "Times New Roman"
+        addChild(scoreNode)
+        score = 0 //Forces a call to the didSet observer
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) -> Void
@@ -40,9 +58,10 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         addChild(node)
     }
     
+    //MARK: - Custom methods
     private func assignColorAndBitmask() -> UIColor
     {
-        let colors : [UIColor] = [.purple, .red, .blue, .green, .darkGray, .cyan, .brown, .yellow]
+        let colors : [UIColor] = [.purple, .red, .blue, .green, .darkGray, .cyan, .brown, .yellow, .orange, .black]
         let randomIndex = Int(arc4random()) % colors.count
         
         colorMask = randomIndex + 1
