@@ -24,6 +24,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     
     let texture = SKTexture(imageNamed: "NewRevan")
     
+    var gameBlocks : [SKSpriteNode] = []
+    
     
     //MARK: - SKScene methods
     override func didMove(to view : SKView) -> Void
@@ -51,8 +53,8 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         guard let touch = touches.first
         else { return }
         let currentColor = assignColorAndBitmask()
-        let width = Int(arc4random() % 50)
-        let height = Int(arc4random() % 50)
+        let width = Int(arc4random() % 50) + 3
+        let height = Int(arc4random() % 50) + 3
         let location = touch.location(in: self)
     
         let node : SKSpriteNode
@@ -132,6 +134,14 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         {
             let speedUp = SKAction.changePlaybackRate(by: 2, duration: 1000)
             sound.run(speedUp)
+        }
+    }
+    
+    private func loadBlocks() -> Void
+    {
+        for _ in 1 ... 100
+        {
+            
         }
     }
 }
