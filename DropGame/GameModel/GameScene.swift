@@ -141,7 +141,16 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     {
         for _ in 1 ... 100
         {
+            let currentColor = assignColorAndBitmask()
+            let width = Int(arc4random()) % 50 + 1
+            let height = Int(arc4random()) % 50 + 1
+            let block = SKSpriteNode(color: currentColor, size: CGSize(width: width, height: height))
+            block.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: width, height: height))
+            block.physicsBody?.contactTestBitMask = UInt32(colorMask)
             
+            let bounciness = CGFloat(Double.random(in: 0.00 ... 0.999))
+            block.physicsBody?.restitution = bounciness
+            gameBlocks.append(block)
         }
     }
 }
