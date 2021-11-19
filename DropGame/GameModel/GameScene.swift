@@ -26,6 +26,15 @@ class GameScene : SKScene, SKPhysicsContactDelegate
     
     var gameBlocks : [SKSpriteNode] = []
     
+    let blockNode : SKLabelNode = SKLabelNode(fontNamed: "Copperplate-Bold")
+    var blocksRemaining = -0
+    {
+        didSet
+        {
+            blockNode.text = "Blocks Remaining: \(blocksRemaining)"
+        }
+    }
+    
     
     //MARK: - SKScene methods
     override func didMove(to view : SKView) -> Void
@@ -38,7 +47,6 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         scoreNode.position.x = 120
         scoreNode.position.y = 385
         scoreNode.fontSize = 20
-        scoreNode.fontName = "Times New Roman"
         addChild(scoreNode)
         score = 0 //Forces a call to the didSet observer
         
@@ -46,29 +54,53 @@ class GameScene : SKScene, SKPhysicsContactDelegate
         let backgroundMusic = SKAudioNode(fileNamed: "music")
         backgroundMusic.name = "music"
         addChild(backgroundMusic)
+        
+        //add the blocks label
+        blockNode.zPosition = 2
+        blockNode.position.x = 120
+        blockNode.position.y = 365
+        blockNode.fontSize = 20
+        addChild(blockNode)
+        blocksRemaining = 0
+        
+        loadBlocks()
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) -> Void
     {
         guard let touch = touches.first
         else { return }
-        let currentColor = assignColorAndBitmask()
-        let width = Int(arc4random() % 50) + 3
-        let height = Int(arc4random() % 50) + 3
+        
         let location = touch.location(in: self)
-    
-        let node : SKSpriteNode
-       
-        
-        node = SKSpriteNode(texture: texture, color: currentColor, size: CGSize(width: width, height: height))
-        node.colorBlendFactor = 1.0
-        node.position = location
-        
-        node.physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width: width, height: height))
-        
-        node.physicsBody?.contactTestBitMask = UInt32(colorMask)
-        
-        addChild(node)
+        if(gameBlocks.isEmpty)
+        {
+            endGame()
+        }
+        else
+        {
+            let currentBlock = gameBlocks.remove(at: Int.random(in: 0 ... gameBlocks.count - 1))
+            currentBlock.position = location
+            addChild(currentBlock)
+            
+            blocksRemaining = gameBlocks.count
+        }
+//        let currentColor = assignColorAndBitmask()
+//        let width = Int(arc4random() % 50) + 3
+//        let height = Int(arc4random() % 50) + 3
+//        let location = touch.location(in: self)
+//
+//        let node : SKSpriteNode
+//
+//
+//        node = SKSpriteNode(texture: texture, color: currentColor, size: CGSize(width: width, height: height))
+//        node.colorBlendFactor = 1.0
+//        node.position = location
+//
+//        node.physicsBody = SKPhysicsBody(texture: texture, size: CGSize(width: width, height: height))
+//
+//        node.physicsBody?.contactTestBitMask = UInt32(colorMask)
+//
+//        addChild(node)
     }
     
     //MARK: - Custom methods
@@ -152,11 +184,13 @@ class GameScene : SKScene, SKPhysicsContactDelegate
             block.physicsBody?.restitution = bounciness
             gameBlocks.append(block)
         }
+        
+        blocksRemaining = gameBlocks.count
     }
     
     private func endGame() -> Void
     {
-        let endTransition = SKTransition.crossFade(withDuration: 5)
+        let endTransition = SKTransition.crossFade(withDuration: 3)
         let endScene = EndGameScene()
         endScene.gameScore = score
         endScene.size = CGSize(width: 300, height: 400)

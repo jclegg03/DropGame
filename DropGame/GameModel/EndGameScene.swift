@@ -42,7 +42,7 @@ class EndGameScene : SKScene
     
     private func restart() -> Void
     {
-        let transition = SKTransition.fade(with: .orange, duration: 15)
+        let transition = SKTransition.fade(with: .orange, duration: 3)
         let restartScene = GameScene()
         restartScene.size = CGSize(width: 300, height: 400)
         restartScene.scaleMode = .fill
