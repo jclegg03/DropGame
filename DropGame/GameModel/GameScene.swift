@@ -153,4 +153,14 @@ class GameScene : SKScene, SKPhysicsContactDelegate
             gameBlocks.append(block)
         }
     }
+    
+    private func endGame() -> Void
+    {
+        let endTransition = SKTransition.crossFade(withDuration: 5)
+        let endScene = EndGameScene()
+        endScene.gameScore = score
+        endScene.size = CGSize(width: 300, height: 400)
+        endScene.scaleMode = .fill
+        self.view?.presentScene(endScene, transition: endTransition)
+    }
 }
